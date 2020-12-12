@@ -10,11 +10,18 @@
 <h1>Text analysis</h1>
 </div>
 <div id="root">
-<h2 id="note">You are doing great!</h2>
+<h2 id="note">Tip will be generated here</h2>
 <h2 id="data"></h2>
+</div>
+<div id="report">
+<button onclick="before()" id="left">previous</button>
+<button onclick="after()" id="right">next</button>
+<h1>Sentence</h1>
+<h1>Tips</h1>
 </div>
 <div id="footer">
     <textarea rows="5" cols="30" id="documentText" placeholder="Enter document here"></textarea>
+    <button id="analysis" onclick="transform()">Detailed analysis</button>
     <button id="upload" type="button">Upload</button>
 </div>
 
