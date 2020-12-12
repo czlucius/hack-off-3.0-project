@@ -9,6 +9,11 @@ h1,h2{
 h2{
     top: 5%;
 }
+button{
+    position: absolute;
+    right: 0px;
+    height: 100%;
+}
 canvas{
     height: 20%;
     width: 60%;
@@ -43,4 +48,9 @@ canvas{
     left: 0px;
     right: 0px;
     background-color: #ffff89;
+}
+#documentText{
+    bottom: 0px;
+    height: 10%;
+    position: fixed;
 }
