@@ -1,3 +1,29 @@
+toggle = 0;
+function transform(){
+    if (toggle == 0){
+        document.getElementById("analysis").innerHTML="General analysis";
+        document.body.style.backgroundColor="#8bc34a";
+        document.getElementById("footer").style.backgroundColor="#bef67a";
+        document.getElementById("analysis").style.backgroundColor="#bef67a";
+        document.getElementById("documentText").style.backgroundColor="#bef67a";
+        document.getElementById("upload").style.backgroundColor="#bef67a";
+        document.getElementById("header").style.backgroundColor="#5a9216";
+        document.getElementById("root").style.display="none";
+        document.getElementById("report").style.display="block";
+        toggle = 1;
+    }else{
+        document.getElementById("analysis").innerHTML="Detailed analysis";
+        document.body.style.backgroundColor="#d4e157";
+        document.getElementById("footer").style.backgroundColor="#ffff89";
+        document.getElementById("analysis").style.backgroundColor="#ffff89";
+        document.getElementById("documentText").style.backgroundColor="#ffff89";
+        document.getElementById("upload").style.backgroundColor="#ffff89";
+        document.getElementById("header").style.backgroundColor="#a0af22";
+        document.getElementById("root").style.display="block";
+        document.getElementById("report").style.display="none";
+        toggle = 0;
+    }
+}
 messages = [""];
 //anger fear joy sadness analytical confident tentative
 attributes = [0,0,0,0,0,0,0];
