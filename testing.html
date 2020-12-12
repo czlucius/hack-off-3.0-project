@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+    <div class="col-sm-2 col-md-2 col-lg-2" ng-show="nativeLanguage === 'en-US'">
+        <button id="gButton" type="button" class="btn btn-block btn-default" ng-click="startWatsonSTT()" uib-tooltip="Wait for 'Listening'">Start pronunciation</button>
+      </div>
+      <div class="col-sm-2 col-md-2 col-lg-2" ng-show="nativeLanguage === 'en-US'">
+        <button type="button" class="btn btn-block btn-default" ng-click="stopWatsonSpeechToText()">Stop pronunciation</button>
+      </div>
+
+</body>
+<script src="testing.js"></script>
+</html>

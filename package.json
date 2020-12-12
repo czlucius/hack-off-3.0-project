@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "browserify": "^17.0.0",
+    "ibm-watson": "^5.7.3",
+    "node-fetch": "^1.7.3",
+    "request": "^2.88.2",
+    "watson-developer-cloud": "^4.0.1",
+    "watson-speech": "^0.38.1"
+  }
+}

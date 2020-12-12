@@ -1,39 +1,64 @@
 //request audio
-if (!navigator.getUserMedia)
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-                      navigator.mozGetUserMedia || navigator.msGetUserMedia;
-if (navigator.getUserMedia){
-    navigator.getUserMedia({audio:true}, 
-      function(stream) {
-          start_microphone(stream);
-      },
-      function(e) {
-        alert('Failed to capture audio.');
-      }
-    );
+
+const options = {
+    audioBitsPerSecond: 16000,
+    mimeType: 'audio/webm;codecs=opus'
+ };
+var rec;
+let chunks = [];
+let recordBtn = document.getElementById("record");
+let stopBtn = document.getElementById("stop");
+
+
+// Button click listeners
+recordBtn.onclick = () => {
+    rec.start();
+    console.log(rec.state);
+    alert('Recording started');
+}
+stopBtn.onclick = () => {
+    rec.stop();
+    console.log(rec.state);
+    alert('Recording stopped')
+}
+
+
+
+
+
+function process_microphone(stream) {
+    rec = new MediaRecorder(stream, options);
+
+    if (!(rec == null)) {
+        // Process data
+        rec.ondataavailable = (e) => {
+            chunks.push(e.data);
+        }
+
+
+        rec.onstop = (e) => {
+            const audioBlob = new Blob(audioChunks);
+            audioBlob.
+        }
+    }
+}
+
+if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+        .then((stream) => {
+            process_microphone(stream);
+        })
+        .catch((e) => {
+            alert('Failed to capture audio. Reason: ' + e);
+        });
 } else { alert('This browser does not support getUserMedia.'); }
-let canvas = document.getElementById("audio_visual");
-let ctx = canvas.getContext("2d");
-//get input as data
-let audioCtx = new AudioContext();
-let analyser = audioCtx.createAnalyser();
-analyser.fftSize = 2048;
-let data = new Uint8Array(analyser.frequencyBinCount);
-//drawing
-requestAnimationFrame(loopingFunction);
-function loopingFunction(){
-    requestAnimationFrame(loopingFunction);
-    analyser.getByteFrequencyData(data);
-    draw(data);
-}
-function draw(data){
-    data = [...data];
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    let space = canvas.width / data.length;
-    data.forEach((value,i)=>{
-        ctx.beginPath();
-        ctx.moveTo(space*i,canvas.height);
-        ctx.lineTo(space*i,canvas.height-value);
-        ctx.stroke();
-    })
-}
+
+
+
+
+// No need Canvas, since file is pre-recorded.
+
+// To be added in other file. 
+//IBM Watson speech to text
+var recognizeMic = require('watson-speech/speech-to-text/recognize-microphone');
+
