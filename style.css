@@ -5,8 +5,6 @@ h1,h2{
     position: relative;
     color: black;
     font-family: roboto;
-}
-h2{
     top: 5%;
 }
 button{
