@@ -14,15 +14,24 @@ uploadBtn.onclick = () => {
         method: 'POST',
         body: documentTextField.value,
         headers: headers,
-    }).then(res => res.json())
+    }).then(res => res.json()) // Commented out as API calls cut into bandwidth
+    
         .then(json => {
-            for(tone in json.document_tone.tones) {
-               if(json.hasOwnProperty(tone)) {
-                   // retrieve the %
-                    var percentage = tone.score * 100;
-                    var toneName = tone.tone_name;
-                    document.getElementById("note").innerHTML=toneName
-                    document.getElementById("rate").innerHTML="Confidence level: "+percentage.toString()+"%"
-               }
-        }});
+            var displayText = "Overall attributes:\n";
+
+
+            for (tone of json["document_tone"]["tones"]) {
+
+                var percentage = (Math.floor(Number(tone["score"]) * 100)).toString();
+                var toneName = tone["tone_name"];
+                displayText += toneName;
+                displayText += ": " ;
+                displayText += percentage;
+                displayText += "%\n"
+            }
+            document.getElementById("data").innerHTML=displayText;
+
+
+            
+        });
 }
