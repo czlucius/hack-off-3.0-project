@@ -1,3 +1,4 @@
+var obj = "";
 let uploadBtn = document.getElementById("upload");
 let documentTextField = document.getElementById("documentText");
 uploadBtn.onclick = () => {
@@ -14,7 +15,14 @@ uploadBtn.onclick = () => {
         body: documentTextField.value,
         headers: headers,
     }).then(res => res.json())
-        .then(json => console.log(json));
-
-
+        .then(json => {
+            for(tone in json.document_tone.tones) {
+               if(json.hasOwnProperty(tone)) {
+                   // retrieve the %
+                    var percentage = tone.score * 100;
+                    var toneName = tone.tone_name;
+                    document.getElementById("note").innerHTML=toneName
+                    document.getElementById("rate").innerHTML="Confidence level: "+percentage.toString()+"%"
+               }
+        }});
 }
