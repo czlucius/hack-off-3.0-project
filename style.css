@@ -10,9 +10,12 @@ h2{
     top: 5%;
 }
 button{
+    background-color: #ffff89;
+    width: 20%;
     position: absolute;
     right: 0px;
     height: 100%;
+    border-width: 5px;
 }
 canvas{
     height: 20%;
@@ -50,7 +53,10 @@ canvas{
     background-color: #ffff89;
 }
 #documentText{
+    background-color: #ffff89;
     bottom: 0px;
     height: 10%;
     position: fixed;
+    overflow: scroll;
+    resize: none;
 }
