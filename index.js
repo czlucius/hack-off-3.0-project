@@ -14,13 +14,10 @@ if (navigator.getUserMedia){
 } else { alert('This browser does not support getUserMedia.'); }
 let canvas = document.getElementById("audio_visual");
 let ctx = canvas.getContext("2d");
-//get input as "source" id
-let audioElement = document.getElementById("source");
+//get input as data
 let audioCtx = new AudioContext();
 let analyser = audioCtx.createAnalyser();
 analyser.fftSize = 2048;
-//create node as analyser cannot work with dom
-let source = audioCtx.createMediaElementSource(audioElement);
 let data = new Uint8Array(analyser.frequencyBinCount);
 //drawing
 requestAnimationFrame(loopingFunction);
