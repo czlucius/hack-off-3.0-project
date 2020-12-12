@@ -17,7 +17,7 @@ uploadBtn.onclick = () => {
     }).then(res => res.json()) // Commented out as API calls cut into bandwidth
     
         .then(json => {
-            var displayText = "Overall attributes:\n";
+            var displayText = "Overall attributes:<br>";
 
 
             for (tone of json["document_tone"]["tones"]) {
