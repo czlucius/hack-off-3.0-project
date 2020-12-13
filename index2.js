@@ -1,7 +1,9 @@
 /** this does not work, but is a good start*/
-
-
-toggle = 0;
+var txt_attributes = [];
+var txt_percentage = [];
+var txt = [];
+var page = 0;
+var toggle = 0;
 function transform() {
     if (toggle == 0) {
         document.getElementById("analysis").innerHTML = "General analysis";
@@ -13,6 +15,15 @@ function transform() {
         document.getElementById("header").style.backgroundColor = "#5a9216";
         document.getElementById("root").style.display = "none";
         document.getElementById("report").style.display = "block";
+        if (txt.length >= 1){
+            displayText = "Sentence:<br>"+txt[page]+"<br>Attribute:<br>";
+            var n = 0;
+            while (n <= txt_attributes[page].length-1){
+                displayText += txt_attributes[page][n]+": "+txt_percentage[page][n]+"% "
+                n = n+1;
+            }
+            document.getElementById("copy").innerHTML=displayText;
+        }
         toggle = 1;
     } else {
         document.getElementById("analysis").innerHTML = "Detailed analysis";
@@ -101,22 +112,24 @@ uploadBtn.onclick = () => {
                 displayText = "You are doing great!";
             }
             document.getElementById("note").innerHTML = displayText;
-            
-            if (json.hasOwnProperty("sentences_tone") && json.sentences_tone.length != 0) {
-                // Add 1st node 1st 
-                sentences = new LinkedList(json.sentences_tone[0]);
-
-                var tempNode = null;
-                // Analyze sentences 
-                for (let i = 0; i < json.sentences_tone.length; i++) {
-                    // Add node
-                    
-                    let newNode = new LinkedListNode(json.sentences_tone[i], new LinkedListNode(json.sentences_tone[i+1]),tempNode);
-                    tempNode = newNode;
-                }
-                current = sentences.head;
-
+            txt_attributes = []
+            txt_percentage = []
+            txt = [];
+            for (tone of json["sentences_tone"]) {
+                txt.push(tone["text"]);
             }
+            for (tone of json["sentences_tone"]["tones"]) {
+                var i = 0;
+                var tmp_percentage = [];
+                var tmp_attribute = [];
+                while (i <= txt){
+                    tmp_percentage.push((Math.floor(Number(tone["score"]) * 100)).toString());
+                    tmp_attributes.push(tone["tone_name"]);
+                }
+                txt_percentage.push(tmp_percentage);
+                txt_attributes.push(tmp_attributes);
+            }
+
         }
 
 
@@ -126,41 +139,27 @@ uploadBtn.onclick = () => {
 
 
 function before() {
-    // Previous button
-    // Retrieve previous
-    if (current.prev == null) {
-        return;
+    if (page-1 >= 0){
+        displayText = "Sentence:<br>"+txt[page]+"<br>Attribute:<br>";
+        var n = 0;
+        while (n <= txt_attributes[page].length-1){
+            displayText += txt_attributes[page][n]+": "+txt_percentage[page][n]+"% "
+            n = n+1;
+        }
+        document.getElementById("copy").innerHTML=displayText;
     }
-    var sentence = current.prev.data;
-    document.getElementById('sentence').innerHTML = sentence.text;
-    current = current.prev;
+    page = page-1;
 }
 
 function after() {
-    // Next button
-    // Retrieve next
-    console.log(JSON.stringify(current));
-    if (current.next == null) {
-        return;
+    if (page-1 >= 0){
+        displayText = "Sentence:<br>"+txt[page]+"<br>Attribute:<br>";
+        var n = 0;
+        while (n <= txt_attributes[page].length-1){
+            displayText += txt_attributes[page][n]+": "+txt_percentage[page][n]+"% "
+            n = n+1;
+        }
+        document.getElementById("copy").innerHTML=displayText;
     }
-    var sentence = current.next.data;
-    document.getElementById('sentence').innerHTML = sentence.text;
-    current = current.next;
-}
-
-
-class LinkedListNode{
-    constructor(data, next = null, prev = null){
-        console.log('next'+JSON.stringify(next));
-        console.log('prev' + JSON.stringify(prev));
-        this.data = data,
-        this.next = next
-        this.prev = prev;
-    }
-}
-
-class LinkedList {
-    constructor(head = null) {
-        this.head = head
-    }
+    page = page-1;
 }
