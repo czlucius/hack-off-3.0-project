@@ -15,14 +15,15 @@ function transform() {
         document.getElementById("header").style.backgroundColor = "#5a9216";
         document.getElementById("root").style.display = "none";
         document.getElementById("report").style.display = "block";
-        if (txt.length >= 1){
-            displayText = "Sentence:<br>"+txt[page]+"<br>Attribute:<br>";
+        if (true){
+          console.log(JSON.stringify(txt))
+            /*displayText = "Sentence:<br>"+txt[page]+"<br>Attribute:<br>";
             var n = 0;
             while (n <= txt_attributes[page].length-1){
                 displayText += txt_attributes[page][n]+": "+txt_percentage[page][n]+"% "
                 n = n+1;
-            }
-            document.getElementById("copy").innerHTML=displayText;
+            }*/
+            
         }
         toggle = 1;
     } else {
@@ -35,11 +36,12 @@ function transform() {
         document.getElementById("header").style.backgroundColor = "#a0af22";
         document.getElementById("root").style.display = "block";
         document.getElementById("report").style.display = "none";
-        toggle = 0;
+        toggle = 0;document.getElementById("copy").innerHTML=sentences[page].text
+        
     }
 }
 messages = [""];
-var sentences;
+var sentences=[""];
 var current;
 //anger fear joy sadness analytical confident tentative
 attributes = [0, 0, 0, 0, 0, 0, 0];
@@ -115,10 +117,13 @@ uploadBtn.onclick = () => {
             txt_attributes = []
             txt_percentage = []
             txt = [];
-            for (tone of json["sentences_tone"]) {
-                txt.push(tone["text"]);
-            }
-            for (tone of json["sentences_tone"]["tones"]) {
+            for (sentence of json["sentences_tone"]) {
+                txt.push(sentence["text"]);
+                sentences.push(sentence)
+                console.log(sentence)
+                console.log(sentence)
+            /*"
+            for (tone of sentence["tones"]) {
                 var i = 0;
                 var tmp_percentage = [];
                 var tmp_attribute = [];
@@ -129,6 +134,7 @@ uploadBtn.onclick = () => {
                 txt_percentage.push(tmp_percentage);
                 txt_attributes.push(tmp_attributes);
             }
+      "  */    }
 
         }
 
@@ -138,28 +144,76 @@ uploadBtn.onclick = () => {
 
 
 
-function before() {
-    if (page-1 >= 0){
-        displayText = "Sentence:<br>"+txt[page]+"<br>Attribute:<br>";
-        var n = 0;
-        while (n <= txt_attributes[page].length-1){
-            displayText += txt_attributes[page][n]+": "+txt_percentage[page][n]+"% "
-            n = n+1;
-        }
-        document.getElementById("copy").innerHTML=displayText;
-    }
-    page = page-1;
+function before() {page-=1
+renderN(sentences[page])
+document.getElementById("copy").innerHTML = sentences[page].text
+
 }
 
-function after() {
-    if (page-1 >= 0){
+function after() {page += 1
+  console.log("55=%"+JSON.stringify(sentences))
+  console.log("71771"+sentences[page].text)
+  
+  renderN(sentences[page])
+  document.getElementById("copy").innerHTML = sentences[page].text
+  /*
+    if (true){
         displayText = "Sentence:<br>"+txt[page]+"<br>Attribute:<br>";
         var n = 0;
         while (n <= txt_attributes[page].length-1){
             displayText += txt_attributes[page][n]+": "+txt_percentage[page][n]+"% "
             n = n+1;
         }
-        document.getElementById("copy").innerHTML=displayText;
+        =displayText;
     }
-    page = page-1;
+    page = page+1;*/
+}
+function renderN(s){
+  var sattributes = [0,0,0,0,0,0,0]
+  
+            for (tone of s["tones"]) {
+
+                var percentage = (Math.floor(Number(tone["score"]) * 100)).toString();
+                var toneName = tone["tone_name"];
+                displayText += toneName;
+                displayText += ": ";
+                displayText += percentage;
+                displayText += "%\n"
+                if (toneName == "Anger") {
+                    sattributes[0] = percentage;
+                } else if (toneName == "Fear") {
+                    sattributes[1] = percentage;
+                } else if (toneName == "Joy") {
+                    ssattributes[2] = percentage;
+                } else if (toneName == "Sadness") {
+                    sattributes[3] = percentage;
+                } else if (toneName == "Analytical") {
+                    sattributes[4] = percentage;
+                } else if (toneName == "Confident") {
+                    sattributes[5] = percentage;
+                } else if (toneName == "Tentative") {
+                    sattributes[6] = percentage;
+                }
+            }
+            
+            //generate tips
+            displayText = "Tip:<br>";
+            if (sattributes[0] >= 60) {
+                displayText += "Calm down. ";
+            } else if (sattributes[1] >= 60) {
+                displayText += "Don't worry too much, everything will be fine. ";
+            } else if (sattributes[2] <= 40) {
+                displayText += "Cheer up! ";
+            } else if (sattributes[3] >= 60) {
+                displayText += "Brighten up your mood! ";
+            } else if (sattributes[4] >= 60) {
+                displayText += "Don't overthink too much. ";
+            } else if (sattributes[5] <= 40) {
+                displayText += "I believe in you! You can do it! ";
+            } else if (sattributes[6] >= 60) {
+                displayText += "Have more faith in yourself! ";
+            } else {
+                displayText = "You are doing great!";
+            }
+            document.getElementById("tips").innerHTML = displayText
 }
