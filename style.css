@@ -16,6 +16,12 @@ h1,h2{
     height: 100%;
     border-width: 5px;
 }
+#left{
+    background-color: #8bc34a;
+}
+#right{
+    background-color: #8bc34a;
+}
 #upload{
     background-color: #ffff89;
     width: 20%;
