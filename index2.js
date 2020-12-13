@@ -90,7 +90,7 @@ uploadBtn.onclick = () => {
             }else if (attributes[6] >= 60){
                 displayText += "Have more faith in yourself! ";
             }
-            if (displayText == ""){
+            if (displayText == "Tip:<br>"){
                 displayText = "You are doing great!";
             }
             document.getElementById("note").innerHTML=displayText;
