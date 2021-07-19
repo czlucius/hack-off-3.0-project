@@ -5,5 +5,6 @@ Project for Hack-Off 3.0 2020.
 
 Powered by IBM Watson APIs(Tone Analyzer)
 
-Demo here:
-https://hack-off-30-project-1.czluciusdev.repl.co/index.html
+Demo here: https://hack-off-30-project-1.czluciusdev.repl.co/index.html
+
+Devfolio Project URL: https://devfolio.co/submissions/text-analyser
